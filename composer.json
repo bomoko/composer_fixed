@@ -1,0 +1,25 @@
+{
+    "name": "bomoko/composer_fixed",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Blaize Kaye",
+            "email": "blaize.kaye@gmail.com"
+        }
+    ],
+    "require": {
+        "composer-plugin-api": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3"
+    },
+    "autoload": {
+	"psr-4": {
+		"ComposerFixed\\": "src/"
+	}
+    },
+    "extra": {
+	"class": "ComposerFixed\\Plugin"	
+    }
+}
