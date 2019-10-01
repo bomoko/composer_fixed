@@ -7,24 +7,17 @@ use Localheinz\Composer\Json\Normalizer\ComposerJsonNormalizer;
 use Localheinz\Json\Normalizer\Json;
 
 
-
-
 class ExtractVersions
 {
 
     public static function extract(array $composerJson, array $composerLock)
     {
         //go through each of the composer.json and grab the packages, get their actual versions from the lock file
+        $lockMap = self::getMappedLockDataFromFileArray($composerLock);
         foreach ($composerJson['require'] as $item => $reqPackage) {
-            $version = array_reduce($composerLock['packages'],
-              function ($i, $v) use ($item) {
-                  if ($v['name'] == $item) {
-                      return ExtractVersions::packageToVersion($v);
-                  }
-                  return $i;
-              }, $reqPackage);
-
-            $composerJson['require'][$item] = $version;
+            if (!empty($lockMap[$item]['version'])) {
+                $composerJson['require'][$item] = $lockMap[$item]['version'];
+            }
         }
         return $composerJson;
     }
@@ -47,4 +40,13 @@ class ExtractVersions
         echo $normalizedJson->encoded();
     }
 
+    public static function getMappedLockDataFromFileArray(array $lockFile)
+    {
+        $returnMap = [];
+        foreach ($lockFile['packages'] as $package) {
+            $returnMap[$package['name']] = $package;
+        }
+
+        return $returnMap;
+    }
 }
