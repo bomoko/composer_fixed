@@ -1,6 +1,5 @@
 {
-    "name": "bomoko/composer_fixed",
-    "type": "composer-plugin",
+    "name": "bomoko/composer-fixed",
     "license": "MIT",
     "authors": [
         {
@@ -22,6 +21,5 @@
 	}
     },
     "extra": {
-	"class": "ComposerFixed\\Plugin"	
     }
 }
