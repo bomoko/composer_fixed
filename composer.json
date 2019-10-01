@@ -1,6 +1,7 @@
 {
     "name": "bomoko/composer-fixed",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Blaize Kaye",
@@ -16,10 +17,8 @@
         "phpunit/phpunit": "^8.3"
     },
     "autoload": {
-	"psr-4": {
-		"ComposerFixed\\": "src/"
-	}
-    },
-    "extra": {
+	  "psr-4": {
+  		"ComposerFixed\\": "src/"
+	  }
     }
 }
