@@ -10,6 +10,22 @@ use Localheinz\Json\Normalizer\Json;
 class ExtractVersions
 {
 
+    public static function extractFromFiles($composerJson, $composerLock)
+    {
+        if(!file_exists($composerJson) || !file_exists($composerLock)) {
+            throw new \Exception("Could not open files");
+        }
+        $json = json_decode(file_get_contents($composerJson), true);
+        if(json_last_error()) {
+            throw new \Exception("Error decoding {$composerJson}: " . json_last_error_msg());
+        }
+        $lock = json_decode(file_get_contents($composerLock), true);
+        if(json_last_error()) {
+            throw new \Exception("Error decoding {$composerLock}: " . json_last_error_msg());
+        }
+        return self::formatJson(self::extract($json, $lock));
+    }
+
     public static function extract(array $composerJson, array $composerLock)
     {
         //go through each of the composer.json and grab the packages, get their actual versions from the lock file
@@ -34,10 +50,10 @@ class ExtractVersions
     {
         $encoded = json_encode($json);
         $normalizer = new ComposerJsonNormalizer();
-        $json = Json::fromEncoded($encoded);
-        $normalizedJson = $normalizer->normalize($json);
+//        $json = Json::fromEncoded($encoded);
+//        $normalizedJson = $normalizer->normalize($json);
 
-        echo $normalizedJson->encoded();
+        echo $encoded;//$normalizedJson->encoded();
     }
 
     public static function getMappedLockDataFromFileArray(array $lockFile)
